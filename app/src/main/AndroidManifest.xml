@@ -4,6 +4,7 @@
     package="com.canche.kremer.ghiblipro">
 
     <application
+        android:name=".GhibliProApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

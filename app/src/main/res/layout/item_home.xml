@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:clipToOutline="true"
+    android:id="@+id/parent_picture_element"
+    android:background="@drawable/round_outline"
+    android:backgroundTint="@color/black"
+    android:layout_margin="10dp"
+    >
+
+    <ImageView
+        android:id="@+id/movie_picture_element"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_placeholder_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_percent="0.8"
+        />
+
+    <TextView
+        android:id="@+id/title_movie_element"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textColor="@color/white"
+        android:paddingTop="5dp"
+        android:textSize="14sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="Pelicula"
+        app:layout_constraintTop_toBottomOf="@id/movie_picture_element"
+        />
+
+    <TextView
+        android:gravity="center_vertical"
+        android:id="@+id/year_movie_element"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        tools:text="Año"
+        app:layout_constraintTop_toBottomOf="@id/title_movie_element"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

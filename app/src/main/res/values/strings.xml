@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">GhibliPro</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+        <string name="api_error">Error con el servidor</string>
+        <string name="detail_description">Descripción: \n%1$s</string>
+        <string name="detail_director">Dirigido por: %1$s</string>
+        <string name="detail_producer">Producido por: %1$s</string>
+        <string name="detail_additional_info">%1$s | %2$s |</string>
+        <string name="retry">Reintentar</string>
+        <string name="search_view_hint">Buscador</string>
+
 </resources>

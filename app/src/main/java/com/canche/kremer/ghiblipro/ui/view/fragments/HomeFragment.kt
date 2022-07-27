@@ -35,6 +35,9 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.bind(view).apply {
             homeRecycler.adapter = adapter
         }
+
+        binding.onRefresh = viewModel::onRefresh
+
         observeFilms()
     }
 

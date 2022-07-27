@@ -20,7 +20,18 @@ class GhibliViewModel @Inject constructor(private val getFilmsUseCase: GetFilmsU
     private var _filmSelected = MutableLiveData<Film>()
     val filmSelect: LiveData<Film> get() = _filmSelected
 
-    init {
+    init {getFilmsFromApi()}
+
+    fun onRefresh(){
+        _films.value = emptyList()
+        getFilmsFromApi()
+    }
+
+    fun setSelectedFilm(film: Film){
+        this._filmSelected.value = film
+    }
+
+    private fun getFilmsFromApi(){
         viewModelScope.launch {
             val result = getFilmsUseCase()
             if(!result.isNullOrEmpty()){
@@ -28,16 +39,5 @@ class GhibliViewModel @Inject constructor(private val getFilmsUseCase: GetFilmsU
             }
         }
     }
-
-    fun setSelectedFilm(film: Film){
-        this._filmSelected.value = film
-    }
-
-    val onRefresh = {
-      _films.value = emptyList()
-        Log.d("Refresh", "is refreshing")
-    }
-
-
 
 }

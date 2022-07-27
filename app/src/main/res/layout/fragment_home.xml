@@ -4,7 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.canche.kremer.ghiblipro.ui.viewmodel.GhibliViewModel"/>
+        <import type="kotlin.jvm.functions.Function0" />
+        <import type="kotlin.Unit" />
+
+        <variable
+            name="onRefresh"
+            type="Function0&lt;Unit>" />
+
+        <variable
+            name="vm"
+            type="com.canche.kremer.ghiblipro.ui.viewmodel.GhibliViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +35,8 @@
             android:id="@+id/home_swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:setOnRefreshListener="@{GhibliViewModel.onRefresh}"
+            app:onRefreshListener="@{() -> action.invoke()}"
+
             app:layout_constraintTop_toBottomOf="@id/home_finder"
             app:layout_constraintBottom_toBottomOf="parent">
 

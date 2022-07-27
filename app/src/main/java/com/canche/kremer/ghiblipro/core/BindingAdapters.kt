@@ -21,9 +21,9 @@ object BindingAdapters {
         view.rating = rating.toRatingStars
     }
 
-    @BindingAdapter("app:setOnRefreshListener")
-    @JvmStatic fun setOnRefreshListener(view: SwipeRefreshLayout, onRefreshListener: () -> Unit){
-        view.setOnRefreshListener{
+    @BindingAdapter("app:onRefreshListener")
+    @JvmStatic fun onRefreshListener(view: SwipeRefreshLayout, onRefreshListener: () -> Unit){
+        view.setOnRefreshListener(){
             onRefreshListener()
             view.isRefreshing = false
         }

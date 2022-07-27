@@ -1,5 +1,8 @@
 package com.canche.kremer.ghiblipro.ui.viewmodel
 
+import android.app.Application
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.canche.kremer.ghiblipro.data.network.GhibliApi
 import com.canche.kremer.ghiblipro.domain.models.Film
@@ -10,7 +13,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GhibliViewModel @Inject constructor(private val getFilmsUseCase: GetFilmsUseCase) : ViewModel() {
-
 
    private var _films = MutableLiveData<List<Film>>()
            val films: LiveData<List<Film>> get() = _films
@@ -30,5 +32,12 @@ class GhibliViewModel @Inject constructor(private val getFilmsUseCase: GetFilmsU
     fun setSelectedFilm(film: Film){
         this._filmSelected.value = film
     }
+
+    val onRefresh = {
+      _films.value = emptyList()
+        Log.d("Refresh", "is refreshing")
+    }
+
+
 
 }

@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class GetFilmsUseCase @Inject constructor(private val repository: FilmRepository) {
 
-    suspend operator fun invoke():NetworkResult<List<FilmModel>>{
+    suspend operator fun invoke():NetworkResult<List<FilmModel>, List<Film>>{
         return repository.getAllFilmsFromApi()
     }
 

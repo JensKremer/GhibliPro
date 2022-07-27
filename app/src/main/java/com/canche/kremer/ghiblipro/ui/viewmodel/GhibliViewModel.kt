@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.canche.kremer.ghiblipro.data.network.GhibliApi
+import com.canche.kremer.ghiblipro.data.network.NetworkResult
 import com.canche.kremer.ghiblipro.domain.models.Film
 import com.canche.kremer.ghiblipro.domain.usecases.GetFilmsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +24,6 @@ class GhibliViewModel @Inject constructor(private val getFilmsUseCase: GetFilmsU
     init {getFilmsFromApi()}
 
     fun onRefresh(){
-        _films.value = emptyList()
         getFilmsFromApi()
     }
 
@@ -33,10 +33,12 @@ class GhibliViewModel @Inject constructor(private val getFilmsUseCase: GetFilmsU
 
     private fun getFilmsFromApi(){
         viewModelScope.launch {
-            val result = getFilmsUseCase()
-            if(!result.isNullOrEmpty()){
-                _films.postValue(result)
+            when(val result = getFilmsUseCase()){
+                is NetworkResult.Success -> _films.postValue(result.data)
+                is NetworkResult.Error -> Log.d("Api Error: ${result.code}", result.message.toString())
+                is NetworkResult.Exception -> Log.d("Api Error", result.e.message.toString())
             }
+
         }
     }
 

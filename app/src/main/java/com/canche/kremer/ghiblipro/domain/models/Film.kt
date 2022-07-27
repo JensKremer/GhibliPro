@@ -16,3 +16,7 @@ data class Film (val title: String,
                  val rtScore: Int,)
 
 fun FilmModel.toDomain() = Film(title, originalTitle, originalTitleRomanised, image, movieBanner, description, director, producer, releaseDate, runningTime, rtScore)
+
+fun mapFilms(listModel : List<FilmModel>): List<Film>{
+    return listModel.map {it.toDomain() }
+}

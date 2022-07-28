@@ -1,5 +1,7 @@
 package com.canche.kremer.ghiblipro.data
 
+import com.canche.kremer.ghiblipro.data.database.dao.FilmDao
+import com.canche.kremer.ghiblipro.data.database.entities.FilmEntity
 import com.canche.kremer.ghiblipro.data.model.FilmModel
 import com.canche.kremer.ghiblipro.data.network.GhibliApi
 import com.canche.kremer.ghiblipro.data.network.NetworkResult
@@ -11,7 +13,8 @@ import retrofit2.HttpException
 import retrofit2.Response
 import javax.inject.Inject
 
-class FilmRepositoryImpl @Inject constructor(private val api: GhibliApi): FilmRepository
+class FilmRepositoryImpl @Inject constructor(
+    private val api: GhibliApi, private val filmDao: FilmDao): FilmRepository
 {
     suspend fun <T : Any, P : Any> handleApi(execute: suspend () -> Response<T>,
                                              map: (T) -> P): NetworkResult<P>
@@ -35,5 +38,12 @@ class FilmRepositoryImpl @Inject constructor(private val api: GhibliApi): FilmRe
          return handleApi({api.getAllMovies()},{mapFilms(it)})
     }
 
+    override suspend fun saveAllFilms(films: List<FilmEntity>){
+        filmDao.saveAllFilms(films)
+    }
+
+    override suspend fun getAllFilms(): List<Film> {
+       return filmDao.getAllFilms().map {it.toDomain()}
+    }
 
 }

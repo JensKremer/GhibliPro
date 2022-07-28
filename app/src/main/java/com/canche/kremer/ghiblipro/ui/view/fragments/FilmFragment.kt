@@ -33,6 +33,4 @@ class FilmFragment : Fragment() {
         binding.runningTime = viewModel.filmSelect.value?.runningTime?.toHoursAndMinutes ?: "0"
     }
 
-
-
 }

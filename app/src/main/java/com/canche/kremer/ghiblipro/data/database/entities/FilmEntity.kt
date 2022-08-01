@@ -2,12 +2,13 @@ package com.canche.kremer.ghiblipro.data.database.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.canche.kremer.ghiblipro.data.model.FilmModel
 import com.canche.kremer.ghiblipro.domain.models.Film
 
 
-@Entity(tableName = "film_table")
+@Entity(tableName = "film_table", indices = [Index(value = ["title"], unique = true)])
 data class FilmEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Int = 0,

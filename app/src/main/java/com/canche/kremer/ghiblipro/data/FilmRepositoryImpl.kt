@@ -39,6 +39,7 @@ class FilmRepositoryImpl @Inject constructor(
     }
 
     override suspend fun saveAllFilms(films: List<FilmEntity>){
+        //filmDao.deleteAllFilms()
         filmDao.saveAllFilms(films)
     }
 
@@ -46,4 +47,7 @@ class FilmRepositoryImpl @Inject constructor(
        return filmDao.getAllFilms().map {it.toDomain()}
     }
 
+    override suspend fun getFilmsByTitleOrYear(string: String): List<Film> {
+        return filmDao.getFilmsByTitleOrYear(string).map { it.toDomain() }
+    }
 }

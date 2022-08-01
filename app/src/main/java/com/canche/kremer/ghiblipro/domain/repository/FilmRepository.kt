@@ -12,4 +12,6 @@ interface FilmRepository {
 
         suspend fun getAllFilms(): List<Film>
 
+        suspend fun getFilmsByTitleOrYear(string: String): List<Film>
+
 }

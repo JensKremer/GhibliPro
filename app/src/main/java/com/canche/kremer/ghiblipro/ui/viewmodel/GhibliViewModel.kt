@@ -8,12 +8,13 @@ import com.canche.kremer.ghiblipro.data.network.GhibliApi
 import com.canche.kremer.ghiblipro.data.network.NetworkResult
 import com.canche.kremer.ghiblipro.domain.models.Film
 import com.canche.kremer.ghiblipro.domain.usecases.GetFilmsUseCase
+import com.canche.kremer.ghiblipro.domain.usecases.SearchFilmUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GhibliViewModel @Inject constructor(private val getFilmsUseCase: GetFilmsUseCase) : ViewModel() {
+class GhibliViewModel @Inject constructor(private val getFilmsUseCase: GetFilmsUseCase, private val searchFilmUseCase: SearchFilmUseCase) : ViewModel() {
 
    private var _films = MutableLiveData<List<Film>>()
            val films: LiveData<List<Film>> get() = _films
@@ -22,10 +23,6 @@ class GhibliViewModel @Inject constructor(private val getFilmsUseCase: GetFilmsU
     val filmSelect: LiveData<Film> get() = _filmSelected
 
     init {getFilmsFromApi()}
-
-    fun onRefresh(){
-        getFilmsFromApi()
-    }
 
     fun setSelectedFilm(film: Film){
         this._filmSelected.value = film
@@ -39,6 +36,16 @@ class GhibliViewModel @Inject constructor(private val getFilmsUseCase: GetFilmsU
                 is NetworkResult.Exception -> Log.d("Api Error", result.e.message.toString())
             }
 
+        }
+    }
+
+    fun onRefresh(){
+        getFilmsFromApi()
+    }
+
+     fun searchFilm(string: String){
+        viewModelScope.launch{
+        _films.postValue(searchFilmUseCase(string))
         }
     }
 

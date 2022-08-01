@@ -13,7 +13,7 @@
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@id/homeFragment"
+            app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true"
             app:destination="@id/homeFragment" />
     </fragment>

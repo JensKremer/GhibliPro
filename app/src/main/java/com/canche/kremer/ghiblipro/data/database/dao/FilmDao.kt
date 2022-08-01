@@ -13,8 +13,12 @@ interface FilmDao {
     @Query("SELECT * FROM film_table")
     suspend fun getAllFilms(): List<FilmEntity>
 
+    @Query("DELETE FROM film_table")
+    suspend fun deleteAllFilms()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveAllFilms(films: List<FilmEntity>)
 
-
+    @Query("SELECT * FROM film_table WHERE film_table.title || film_table.release_date like '%' || :string || '%'")
+    suspend fun getFilmsByTitleOrYear(string: String): List<FilmEntity>
 }

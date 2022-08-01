@@ -3,6 +3,7 @@ package com.canche.kremer.ghiblipro.core
 import android.util.Log
 import android.widget.ImageView
 import android.widget.RatingBar
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
@@ -27,6 +28,22 @@ object BindingAdapters {
             onRefreshListener()
             view.isRefreshing = false
         }
+    }
+
+
+    @BindingAdapter("app:onQueryTextChange")
+    @JvmStatic fun onQueryTextChange(view: SearchView, queryTextChange: (String) -> Unit){
+        view.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                queryTextChange(newText!!)
+                return true
+            }
+
+        })
     }
 
 }

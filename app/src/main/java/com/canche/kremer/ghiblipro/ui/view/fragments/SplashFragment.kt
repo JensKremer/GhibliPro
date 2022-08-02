@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import com.canche.kremer.ghiblipro.R
 import com.canche.kremer.ghiblipro.databinding.FragmentSplashBinding
+import com.canche.kremer.ghiblipro.ui.UiState
 import com.canche.kremer.ghiblipro.ui.viewmodel.GhibliViewModel
 
 
@@ -26,12 +28,26 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeFilms()
+        //observeFilms()
+        observeUiState()
     }
 
     private fun observeFilms(){
         viewModel.films.observe(viewLifecycleOwner){
-            NavHostFragment.findNavController(this).navigate(R.id.action_splashFragment_to_homeFragment)
+            //NavHostFragment.findNavController(this).navigate(R.id.action_splashFragment_to_homeFragment)
+        }
+    }
+
+    private fun observeUiState(){
+        viewModel.uiState.observe(viewLifecycleOwner, Observer(::updateUI))
+    }
+
+    private fun updateUI(state: UiState){
+        when(state){
+            UiState.Content -> {
+                NavHostFragment.findNavController(this).navigate(R.id.action_splashFragment_to_homeFragment)
+            }
+            else -> {}
         }
     }
 

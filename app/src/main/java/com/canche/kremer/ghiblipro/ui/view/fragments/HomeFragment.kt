@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import com.canche.kremer.ghiblipro.R
 import com.canche.kremer.ghiblipro.databinding.FragmentHomeBinding
 import com.canche.kremer.ghiblipro.databinding.FragmentSplashBinding
 import com.canche.kremer.ghiblipro.domain.models.Film
+import com.canche.kremer.ghiblipro.ui.UiState
 import com.canche.kremer.ghiblipro.ui.view.adapters.RecyclerViewAdapter
 import com.canche.kremer.ghiblipro.ui.viewmodel.GhibliViewModel
 
@@ -21,7 +23,8 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel : GhibliViewModel by activityViewModels()
 
-    private val adapter = RecyclerViewAdapter() { film -> onFilmClick(film)  }
+    private val adapter by lazy { RecyclerViewAdapter(onClickListener = viewModel::onFilmSelected) }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +44,7 @@ class HomeFragment : Fragment() {
         binding.searchFilm = viewModel::searchFilm
 
         observeFilms()
+        observeUiState()
     }
 
     private fun observeFilms(){
@@ -49,9 +53,19 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun onFilmClick(film: Film){
-        viewModel.setSelectedFilm(film)
-        NavHostFragment.findNavController(this).navigate(R.id.action_homeFragment_to_filmFragment)
+    private fun observeUiState(){
+        viewModel.uiState.observe(viewLifecycleOwner, Observer(::updateUI))
+    }
+
+
+    private fun updateUI(state: UiState){
+        when(state){
+            UiState.Navigation -> {
+                NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_homeFragment_to_filmFragment)
+            }
+            else -> {}
+        }
     }
 
 

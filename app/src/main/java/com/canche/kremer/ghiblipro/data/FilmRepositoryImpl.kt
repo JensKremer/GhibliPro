@@ -2,6 +2,7 @@ package com.canche.kremer.ghiblipro.data
 
 import com.canche.kremer.ghiblipro.data.database.dao.FilmDao
 import com.canche.kremer.ghiblipro.data.database.entities.FilmEntity
+import com.canche.kremer.ghiblipro.data.database.entities.toDatabase
 import com.canche.kremer.ghiblipro.data.model.FilmModel
 import com.canche.kremer.ghiblipro.data.network.GhibliApi
 import com.canche.kremer.ghiblipro.data.network.NetworkResult
@@ -16,8 +17,8 @@ import javax.inject.Inject
 class FilmRepositoryImpl @Inject constructor(
     private val api: GhibliApi, private val filmDao: FilmDao): FilmRepository
 {
-    suspend fun <T : Any, P : Any> handleApi(execute: suspend () -> Response<T>,
-                                             map: (T) -> P): NetworkResult<P>
+    private suspend fun <T : Any, P : Any> handleApi(execute: suspend () -> Response<T>,
+                                                     map: (T) -> P): NetworkResult<P>
     {
         return try {
             val response = execute()
@@ -38,9 +39,8 @@ class FilmRepositoryImpl @Inject constructor(
          return handleApi({api.getAllMovies()},{mapFilms(it)})
     }
 
-    override suspend fun saveAllFilms(films: List<FilmEntity>){
-        //filmDao.deleteAllFilms()
-        filmDao.saveAllFilms(films)
+    override suspend fun saveAllFilms(films: List<Film>){
+        filmDao.saveAllFilms(films.map { it.toDatabase() })
     }
 
     override suspend fun getAllFilms(): List<Film> {

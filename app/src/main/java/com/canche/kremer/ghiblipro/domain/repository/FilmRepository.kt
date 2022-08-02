@@ -8,7 +8,7 @@ interface FilmRepository {
 
         suspend fun getAllFilmsFromApi(): NetworkResult<List<Film>>
 
-        suspend fun saveAllFilms(films: List<FilmEntity>)
+        suspend fun saveAllFilms(films: List<Film>)
 
         suspend fun getAllFilms(): List<Film>
 

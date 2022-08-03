@@ -3,6 +3,7 @@ package com.canche.kremer.ghiblipro.data.model
 import com.google.gson.annotations.SerializedName
 
 data class FilmModel (
+    @SerializedName("id") val id: String,
     @SerializedName("title") val title: String,
     @SerializedName("original_title") val originalTitle: String,
     @SerializedName("original_title_romanised") val originalTitleRomanised: String,

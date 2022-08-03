@@ -33,7 +33,7 @@ class GetFilmsUseCaseTest{
         val networkResultSuccess = mockedNetworkResultSuccess
         whenever(filmRepository.getAllFilmsFromApi()).thenReturn(networkResultSuccess)
 
-        val result = getFilmsUseCase.invoke()
+        val result = getFilmsUseCase.fromApi()
 
         assertEquals(networkResultSuccess, result)
 
@@ -44,8 +44,7 @@ class GetFilmsUseCaseTest{
         val networkResultError= mockedNetworkResultError
         whenever(filmRepository.getAllFilmsFromApi()).thenReturn(networkResultError)
 
-        val result = getFilmsUseCase.invoke()
-
+        val result = getFilmsUseCase.fromApi()
         assertEquals(networkResultError, result)
 
     }
@@ -55,7 +54,7 @@ class GetFilmsUseCaseTest{
         val networkResultException= mockedNetworkResultException
         whenever(filmRepository.getAllFilmsFromApi()).thenReturn(networkResultException)
 
-        val result = getFilmsUseCase.invoke()
+        val result = getFilmsUseCase.fromApi()
 
         assertEquals(networkResultException, result)
 

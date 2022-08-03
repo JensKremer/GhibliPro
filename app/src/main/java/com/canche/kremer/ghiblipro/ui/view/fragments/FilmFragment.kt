@@ -6,31 +6,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import com.canche.kremer.ghiblipro.R
-import com.canche.kremer.ghiblipro.core.toHoursAndMinutes
+import com.canche.kremer.ghiblipro.core.extensions.toHoursAndMinutes
 import com.canche.kremer.ghiblipro.databinding.FragmentFilmBinding
 import com.canche.kremer.ghiblipro.databinding.FragmentHomeBinding
+import com.canche.kremer.ghiblipro.domain.models.Film
+import com.canche.kremer.ghiblipro.ui.viewmodel.FilmViewModel
 import com.canche.kremer.ghiblipro.ui.viewmodel.GhibliViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class FilmFragment : Fragment() {
 
     private lateinit var binding: FragmentFilmBinding
-    private val viewModel : GhibliViewModel by activityViewModels()
+    private val args: FilmFragmentArgs by navArgs()
+    private val viewModel : FilmViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        return inflater.inflate(R.layout.fragment_film, container, false)
+        viewModel.getFilmById(args.filmId)
+        binding = FragmentFilmBinding.inflate(inflater, container, false)
+        return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding =  FragmentFilmBinding.bind(view)
-        binding.film = viewModel.filmSelect.value
-        binding.runningTime = viewModel.filmSelect.value?.runningTime?.toHoursAndMinutes ?: "0"
+        observeFilm()
+    }
+
+    private fun observeFilm(){
+        viewModel.film.observe(viewLifecycleOwner, Observer(::updateUi))
+    }
+
+    private fun updateUi(film: Film){
+        binding.film = film
+        binding.runningTime = film.runningTime.toHoursAndMinutes
     }
 
 }

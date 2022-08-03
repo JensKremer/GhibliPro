@@ -10,8 +10,8 @@ import com.canche.kremer.ghiblipro.domain.models.Film
 
 @Entity(tableName = "film_table", indices = [Index(value = ["title"], unique = true)])
 data class FilmEntity(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") val id: Int = 0,
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "id") val id: String,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "originalTitle") val originalTitle: String,
     @ColumnInfo(name = "original_title_romanised") val originalTitleRomanised: String,
@@ -26,6 +26,7 @@ data class FilmEntity(
     )
 
 fun Film.toDatabase() = FilmEntity(
+    id = id,
     title = title,
     originalTitle = originalTitle,
     originalTitleRomanised = originalTitleRomanised,
@@ -40,6 +41,7 @@ fun Film.toDatabase() = FilmEntity(
 )
 
 fun FilmModel.toDatabase() = FilmEntity(
+    id = id,
     title = title,
     originalTitle = originalTitle,
     originalTitleRomanised = originalTitleRomanised,

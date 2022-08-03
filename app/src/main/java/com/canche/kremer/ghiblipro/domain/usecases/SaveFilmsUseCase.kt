@@ -8,5 +8,7 @@ import com.canche.kremer.ghiblipro.domain.repository.FilmRepository
 import javax.inject.Inject
 
 class SaveFilmsUseCase @Inject constructor(private val repository: FilmRepository) {
-    suspend operator fun invoke(films: List<Film>) = repository.saveAllFilms(films)
+    suspend operator fun invoke(films: List<Film>): List<Long>{
+       return repository.saveAllFilms(films)
+    }
 }

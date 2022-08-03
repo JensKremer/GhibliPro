@@ -33,5 +33,9 @@
         android:id="@+id/filmFragment"
         android:name="com.canche.kremer.ghiblipro.ui.view.fragments.FilmFragment"
         android:label="fragment_film"
-        tools:layout="@layout/fragment_film" />
+        tools:layout="@layout/fragment_film" >
+        <argument
+            android:name="filmId"
+            app:argType="string" />
+    </fragment>
 </navigation>

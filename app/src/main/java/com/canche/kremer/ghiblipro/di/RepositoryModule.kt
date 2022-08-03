@@ -17,7 +17,6 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-
     fun provideFilmRepository(ghibliApi: GhibliApi, fimDao: FilmDao):
             FilmRepository = FilmRepositoryImpl(ghibliApi, fimDao)
 

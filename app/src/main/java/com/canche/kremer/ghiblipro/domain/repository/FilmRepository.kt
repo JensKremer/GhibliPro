@@ -8,9 +8,11 @@ interface FilmRepository {
 
         suspend fun getAllFilmsFromApi(): NetworkResult<List<Film>>
 
-        suspend fun saveAllFilms(films: List<Film>)
+        suspend fun saveAllFilms(films: List<Film>): List<Long>
 
-        suspend fun getAllFilms(): List<Film>
+        suspend fun getAllFilmsFromDB(): List<Film>
+
+        suspend fun getAllFilmById(id: String): Film
 
         suspend fun getFilmsByTitleOrYear(string: String): List<Film>
 

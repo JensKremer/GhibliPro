@@ -1,4 +1,4 @@
-package com.canche.kremer.ghiblipro.core
+package com.canche.kremer.ghiblipro.core.extensions
 
 val Int.toHoursAndMinutes: String
     get() {

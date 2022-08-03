@@ -1,27 +1,26 @@
 package com.canche.kremer.ghiblipro.ui.view.fragments
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
 import com.canche.kremer.ghiblipro.R
 import com.canche.kremer.ghiblipro.databinding.FragmentHomeBinding
 import com.canche.kremer.ghiblipro.databinding.FragmentSplashBinding
-import com.canche.kremer.ghiblipro.domain.models.Film
-import com.canche.kremer.ghiblipro.ui.UiState
+import com.canche.kremer.ghiblipro.ui.states.HomeState
 import com.canche.kremer.ghiblipro.ui.view.adapters.RecyclerViewAdapter
-import com.canche.kremer.ghiblipro.ui.viewmodel.GhibliViewModel
+import com.canche.kremer.ghiblipro.ui.viewmodel.HomeViewModel
+import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
-
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel : GhibliViewModel by activityViewModels()
+    private val viewModel : HomeViewModel by viewModels()
 
     private val adapter by lazy { RecyclerViewAdapter(onClickListener = viewModel::onFilmSelected) }
 
@@ -30,41 +29,38 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHomeBinding.bind(view).apply {
-            homeRecycler.adapter = adapter
-        }
-
+        binding.homeRecycler.adapter = adapter
         binding.onRefresh = viewModel::onRefresh
         binding.searchFilm = viewModel::searchFilm
-
-        observeFilms()
+        //viewModel.onRefresh()
         observeUiState()
     }
 
-    private fun observeFilms(){
-        viewModel.films.observe(viewLifecycleOwner){
-            viewModel.films.value?.let { films -> adapter.updateFilms(films) }
-        }
-    }
 
     private fun observeUiState(){
         viewModel.uiState.observe(viewLifecycleOwner, Observer(::updateUI))
     }
 
+    private fun toFilmFragment(id: String){
+        val action: HomeFragmentDirections.ActionHomeFragmentToFilmFragment =
+            HomeFragmentDirections.actionHomeFragmentToFilmFragment(id)
+        NavHostFragment.findNavController(this).navigate(action)
+        viewModel.setWating()
+    }
 
-    private fun updateUI(state: UiState){
+
+    private fun updateUI(state: HomeState){
         when(state){
-            UiState.Navigation -> {
-                NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_homeFragment_to_filmFragment)
-            }
-            else -> {}
+            is HomeState.Navigate -> toFilmFragment(state.film.id)
+            is HomeState.LoadFilms -> adapter.updateFilms(state.films)
+            is HomeState.ErrorDownloading ->{}
+            is HomeState.Waiting -> {}
         }
     }
 

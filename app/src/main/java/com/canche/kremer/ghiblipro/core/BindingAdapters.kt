@@ -1,6 +1,5 @@
 package com.canche.kremer.ghiblipro.core
 
-import android.util.Log
 import android.widget.ImageView
 import android.widget.RatingBar
 import androidx.appcompat.widget.SearchView
@@ -8,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.canche.kremer.ghiblipro.core.extensions.toRatingStars
 
 object BindingAdapters {
 

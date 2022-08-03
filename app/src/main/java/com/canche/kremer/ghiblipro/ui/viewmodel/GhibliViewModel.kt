@@ -40,7 +40,7 @@ class GhibliViewModel @Inject constructor(private val getFilmsUseCase: GetFilmsU
 
     private fun getFilmsFromApi(){
         viewModelScope.launch {
-            when(val result = getFilmsUseCase()){
+            when(val result = getFilmsUseCase.fromApi()){
                 is NetworkResult.Success -> saveFilms(result.data)
                 is NetworkResult.Error -> Log.d("Api Error: ${result.code}", result.message.toString())
                 is NetworkResult.Exception -> Log.d("Api Error", result.e.message.toString())
@@ -63,6 +63,10 @@ class GhibliViewModel @Inject constructor(private val getFilmsUseCase: GetFilmsU
         viewModelScope.launch{
         _films.postValue(searchFilmUseCase(string))
         }
+    }
+
+    fun load() {
+        _uiState.value = UiState.Loading
     }
 
 }

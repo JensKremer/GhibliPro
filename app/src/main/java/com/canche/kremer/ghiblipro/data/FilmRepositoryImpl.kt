@@ -39,12 +39,16 @@ class FilmRepositoryImpl @Inject constructor(
          return handleApi({api.getAllMovies()},{mapFilms(it)})
     }
 
-    override suspend fun saveAllFilms(films: List<Film>){
-        filmDao.saveAllFilms(films.map { it.toDatabase() })
+    override suspend fun saveAllFilms(films: List<Film>): List<Long>{
+       return filmDao.saveAllFilms(films.map { it.toDatabase() })
     }
 
-    override suspend fun getAllFilms(): List<Film> {
+    override suspend fun getAllFilmsFromDB(): List<Film> {
        return filmDao.getAllFilms().map {it.toDomain()}
+    }
+
+    override suspend fun getAllFilmById(id: String): Film {
+        return filmDao.getAllFilmById(id).toDomain()
     }
 
     override suspend fun getFilmsByTitleOrYear(string: String): List<Film> {

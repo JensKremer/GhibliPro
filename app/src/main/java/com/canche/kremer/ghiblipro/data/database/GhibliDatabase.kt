@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.canche.kremer.ghiblipro.data.database.dao.FilmDao
 import com.canche.kremer.ghiblipro.data.database.entities.FilmEntity
 
-@Database(entities = [FilmEntity::class], version = 2)
+@Database(entities = [FilmEntity::class], version = 3)
     abstract class GhibliDataBase: RoomDatabase() {
 
         abstract fun getFilmDao():FilmDao

@@ -1,12 +1,9 @@
 package com.canche.kremer.ghiblipro.ui.view.fragments
-
-import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment
@@ -14,9 +11,7 @@ import com.canche.kremer.ghiblipro.R
 import com.canche.kremer.ghiblipro.core.extensions.makeGone
 import com.canche.kremer.ghiblipro.core.extensions.makeVisible
 import com.canche.kremer.ghiblipro.databinding.FragmentSplashBinding
-import com.canche.kremer.ghiblipro.ui.UiState
 import com.canche.kremer.ghiblipro.ui.states.SplashState
-import com.canche.kremer.ghiblipro.ui.viewmodel.GhibliViewModel
 import com.canche.kremer.ghiblipro.ui.viewmodel.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

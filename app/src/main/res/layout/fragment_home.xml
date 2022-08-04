@@ -16,10 +16,6 @@
         <variable
             name="searchFilm"
             type="Function1&lt;String,Unit>" />
-
-        <variable
-            name="vm"
-            type="com.canche.kremer.ghiblipro.ui.viewmodel.GhibliViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

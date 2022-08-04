@@ -47,7 +47,7 @@ class FilmRepositoryImpl @Inject constructor(
        return filmDao.getAllFilms().map {it.toDomain()}
     }
 
-    override suspend fun getAllFilmById(id: String): Film {
+    override suspend fun getFilmById(id: String): Film {
         return filmDao.getAllFilmById(id).toDomain()
     }
 

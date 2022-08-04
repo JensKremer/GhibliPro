@@ -6,6 +6,8 @@ import com.canche.kremer.ghiblipro.domain.repository.FilmRepository
 import com.canche.kremer.ghiblipro.mockedNetworkResultError
 import com.canche.kremer.ghiblipro.mockedNetworkResultException
 import com.canche.kremer.ghiblipro.mockedNetworkResultSuccess
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
@@ -22,42 +24,33 @@ class GetFilmsUseCaseTest{
     private lateinit var filmRepository: FilmRepository
     lateinit var getFilmsUseCase: GetFilmsUseCase
 
-
     @Before
     fun onBefore(){
         getFilmsUseCase = GetFilmsUseCase(filmRepository)
     }
 
     @Test
-    fun `invoke calls films repository when network result is success`()= runBlocking {
-        val networkResultSuccess = mockedNetworkResultSuccess
-        whenever(filmRepository.getAllFilmsFromApi()).thenReturn(networkResultSuccess)
-
-        val result = getFilmsUseCase.fromApi()
-
-        assertEquals(networkResultSuccess, result)
-
+    fun `getFilmsUseCase fromApi calls repository getAllFilmsFromApi`() {
+        runBlocking {
+            getFilmsUseCase.fromApi()
+            verify(filmRepository, times(1)).getAllFilmsFromApi()
+        }
     }
 
     @Test
-    fun `invoke calls films repository when network result is an Error`()= runBlocking {
-        val networkResultError= mockedNetworkResultError
-        whenever(filmRepository.getAllFilmsFromApi()).thenReturn(networkResultError)
-
-        val result = getFilmsUseCase.fromApi()
-        assertEquals(networkResultError, result)
-
+    fun `getFilmsUseCase byID calls repository getAllFilmsFromDB`(){ runBlocking {
+        getFilmsUseCase.fromDB()
+        verify(filmRepository, times(1)).getAllFilmsFromDB()
+        }
     }
 
     @Test
-    fun `invoke calls films repository when network result is an Exeption`()= runBlocking {
-        val networkResultException= mockedNetworkResultException
-        whenever(filmRepository.getAllFilmsFromApi()).thenReturn(networkResultException)
-
-        val result = getFilmsUseCase.fromApi()
-
-        assertEquals(networkResultException, result)
-
+    fun `getFilmsUseCase byID calls repository getFilmById`(){
+        runBlocking {
+            val id = "id"
+            getFilmsUseCase.byId(id)
+            verify(filmRepository, times(1)).getFilmById(id)
+        }
     }
 
 }

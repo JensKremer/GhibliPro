@@ -12,7 +12,7 @@ interface FilmRepository {
 
         suspend fun getAllFilmsFromDB(): List<Film>
 
-        suspend fun getAllFilmById(id: String): Film
+        suspend fun getFilmById(id: String): Film
 
         suspend fun getFilmsByTitleOrYear(string: String): List<Film>
 

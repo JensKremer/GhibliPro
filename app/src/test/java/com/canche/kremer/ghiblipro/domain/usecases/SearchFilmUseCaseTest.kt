@@ -4,6 +4,8 @@ import com.canche.kremer.ghiblipro.domain.models.Film
 import com.canche.kremer.ghiblipro.domain.repository.FilmRepository
 import com.canche.kremer.ghiblipro.mockedFilm
 import com.canche.kremer.ghiblipro.mockedFilmList
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -26,13 +28,14 @@ class SearchFilmUseCaseTest{
     }
 
     @Test
-    fun `invoke calls films repository`()= runBlocking {
-        val films = mockedFilmList
-        whenever(filmRepository.getFilmsByTitleOrYear("Castle")).thenReturn(films)
+    fun `invoke calls films repository`(){
+        runBlocking {
+        val wordToSearch = "Castle"
 
-        val result = searchFilmUseCase.invoke("Castle")
+        searchFilmUseCase.invoke(wordToSearch)
 
-        assertEquals(films, result)
+        verify(filmRepository, times(1)).getFilmsByTitleOrYear(wordToSearch)
+        }
     }
 
 }

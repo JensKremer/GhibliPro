@@ -5,6 +5,7 @@ import com.canche.kremer.ghiblipro.domain.models.Film
 import java.lang.Exception
 
 val mockedFilm = Film(
+    "1",
     "Castle in the Sky",
     "天空の城ラピュタ",
     "Tenkū no shiro Rapyuta",

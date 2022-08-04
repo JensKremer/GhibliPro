@@ -24,7 +24,6 @@ class HomeFragment : Fragment() {
 
     private val adapter by lazy { RecyclerViewAdapter(onClickListener = viewModel::onFilmSelected) }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,22 +37,18 @@ class HomeFragment : Fragment() {
         binding.homeRecycler.adapter = adapter
         binding.onRefresh = viewModel::onRefresh
         binding.searchFilm = viewModel::searchFilm
-        //viewModel.onRefresh()
         observeUiState()
     }
-
 
     private fun observeUiState(){
         viewModel.uiState.observe(viewLifecycleOwner, Observer(::updateUI))
     }
 
     private fun toFilmFragment(id: String){
-        val action: HomeFragmentDirections.ActionHomeFragmentToFilmFragment =
-            HomeFragmentDirections.actionHomeFragmentToFilmFragment(id)
+        val action = HomeFragmentDirections.actionHomeFragmentToFilmFragment(id)
         NavHostFragment.findNavController(this).navigate(action)
         viewModel.setWating()
     }
-
 
     private fun updateUI(state: HomeState){
         when(state){
@@ -63,6 +58,4 @@ class HomeFragment : Fragment() {
             is HomeState.Waiting -> {}
         }
     }
-
-
 }
